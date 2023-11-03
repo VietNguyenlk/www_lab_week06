@@ -34,7 +34,13 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:2.0.7'
     testImplementation 'org.slf4j:slf4j-simple:2.0.9'
 
+    //bcrypt
+    implementation 'at.favre.lib:bcrypt:0.10.2'
 
+    //generate random text
+    implementation 'org.thshsh:lorem-ipsum-generator:2.0.0'
+    //https://github.com/datafaker-net/datafaker/
+    implementation 'net.datafaker:datafaker:2.0.2'
     // auto load
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
