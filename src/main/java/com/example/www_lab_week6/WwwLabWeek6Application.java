@@ -1,18 +1,16 @@
+package com.example.www_lab_week6;
+
 import net.datafaker.Faker;
 import org.loremipsum.LoremIpsum;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import com.example.www_lab_week6.backend.models.Post;
-import com.example.www_lab_week6.backend.models.PostComment;
 import com.example.www_lab_week6.backend.models.User;
 import com.example.www_lab_week6.backend.repositories.PostCommentRepository;
 import com.example.www_lab_week6.backend.repositories.PostRepository;

@@ -11,6 +11,7 @@ import com.example.www_lab_week6.backend.repositories.UserRepository;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserServices {
+    @Autowired
     private UserRepository userRepository;
 
     public User login(String email, String password) {
