@@ -11,7 +11,7 @@ import com.example.www_lab_week6.backend.repositories.UserRepository;
 import com.example.www_lab_week6.backend.services.UserServices;
 
 @Controller
-@RequestMapping("/users")
+//@RequestMapping("/users")
 @NoArgsConstructor @AllArgsConstructor
 public class UserController {
     private UserRepository userRepository;
@@ -22,7 +22,8 @@ public class UserController {
         return "";
     }
 
-    @GetMapping("/add-form")
+//    @GetMapping("/add-form")
+    @RequestMapping("/add-form")
     public String show(@ModelAttribute User user, Model model){
         user =new User();
         model.addAttribute("user",user);
