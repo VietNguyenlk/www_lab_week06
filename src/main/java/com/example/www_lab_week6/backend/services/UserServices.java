@@ -17,4 +17,7 @@ public class UserServices {
     public User login(String email, String password) {
         return userRepository.findByEmailAndPasswordHash(email, password).orElse(null);
     }
+    public User update(User user){
+        return userRepository.save(user);
+    };
 }
