@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public String getUser(@PathVariable("id") String id){
-        return "";
+        return "index";
     }
 
 //    @GetMapping("/add-form")
@@ -33,14 +33,14 @@ public class UserController {
         userRepository.save(user);
         return "/";
     }
-    @GetMapping("/show-login-page")
+    @RequestMapping("/show-login-page")
     public String show_login(@ModelAttribute User user, Model model){
         model.addAttribute("user", new User());
         return "users/login";
     }
     @PostMapping("/login")
     public String login(@ModelAttribute User user, Model model){
-        User us = userServices.login(user.getEmail(), user.getPasswordHash());
+//        User us = userServices.login(user.getEmail(), user.getPasswordHash());
         return "index";
     }
 }

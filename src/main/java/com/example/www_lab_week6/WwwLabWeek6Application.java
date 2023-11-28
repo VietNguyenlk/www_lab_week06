@@ -44,14 +44,14 @@ public class WwwLabWeek6Application {
 
             Faker faker = new Faker(new Locale("vi","VN"));
 
-            User user1 = new User("teo", "van", "nguyen",
-                    "01=918 444 666", "teo@gmail.com",
-                    "$2a$17$IDkLPNOxFvUaLnkvKbPoT.b3pWnJVUza.bKNnYsVA7sonJpn3DvPa"/*teoteo*/,
+            User user1 = new User("Nguyen", "van", "Viet",
+                    "01=918 444 777", "viet@gmail.com",
+                    "123456789",
                     Instant.now(), Instant.now(), LoremIpsum.createParagraph(100),
                     LoremIpsum.createParagraph(100));
             User user2 = new User("ty", "van", "Tran",
-                    "0903 646 555", "ty@gmail.com",
-                    "$2a$17$IDkLPNOxFvUaLnkvKbPoT.b3pWnJVUza.bKNnYsVA7sonJpn3DvPa"/*teoteo*/,
+                    "0903 999 777", "iuh@gmail.com",
+                    "123456789",
                     Instant.now(), Instant.now(), LoremIpsum.createParagraph(100),
                     LoremIpsum.createParagraph(100));
             userRepository.save(user1);
