@@ -3,10 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
 </head>
 <body>
-<h1>xin chao</h1>
 
+
+
+<div th:each="post, iStat:${postPage.content}">
+    <div class="article-container">
+        <p th:text="${post.id}"></p>
+        <h1 class="article-title" th:text="${post.title}"></h1>
+        <p class="date" th:text="${post.publishedAt}"></p>
+        <p class="article-content" th:text="${post.content}"></p>
+        <h3>Comments: </h3>
+
+        <div th:each="comment : ${post.postComments}">
+            <div class="comment">
+                <h2 th:text="${comment.title}"></h2>
+                <p class="userComment" th:if="${comment.user != null}" th:text="${comment.user.getName()}"></p>
+                <p class="date" th:text="${comment.publishedAt}"></p>
+                <p th:text="${comment.content}"></p>
+                <div th:each="commentChild : ${comment.postComments}">
+                    <div class="comment">
+                        <h2 th:text="${commentChild.title}"></h2>
+                        <p class="userComment" th:text="${commentChild.user.getName()}"></p>
+                        <p class="date" th:text="${commentChild.publishedAt}"></p>
+                        <p th:text="${commentChild.content}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="inline" th:if="${postPage.totalPages > 0}" th:each="pageNumber :${pageNumbers}">
+    <a th:href="@{/post(page=${pageNumber})}"
+       th:text="${pageNumber}"
+       th:class="${pageNumber==postPage.number + 1} ? active"></a>
+</div>
 </body>
 </html>
-

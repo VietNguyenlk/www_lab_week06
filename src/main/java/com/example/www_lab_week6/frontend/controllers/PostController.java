@@ -1,0 +1,93 @@
+package com.example.www_lab_week6.frontend.controllers;
+
+
+
+import com.example.www_lab_week6.backend.models.Post;
+import com.example.www_lab_week6.backend.models.User;
+import com.example.www_lab_week6.backend.services.PostServices;
+
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+@Controller
+public class PostController {
+    @Autowired
+    private final PostServices postService;
+
+
+    public PostController(PostServices postService) {
+        this.postService = postService;
+
+    }
+
+    @PostMapping("/create-post")
+    public String createPost(HttpServletRequest req,
+                             @RequestParam("title") Optional<String> title,
+                             @RequestParam("content") Optional<String> content){
+        Post post = new Post();
+//        post.setCreateAt(LocalDateTime.now());
+        post.setTitle(title.orElse("default title"));
+        post.setContent(content.orElse("nothing in here"));
+        post.setPublished(true);
+//        post.setPublishedAt(LocalDateTime.now());
+//        post.setCreateAt(LocalDateTime.now());
+        HttpSession session =req.getSession();
+        User user = (User) session.getAttribute("userLogin");
+        post.setAuthor(user);
+        postService.save(post);
+        return "redirect:/post";
+    }
+    @GetMapping("/post")
+    public  String showPostPaging(Model model,HttpServletRequest req,
+                                  @RequestParam("page") Optional<Integer> page,
+                                  @RequestParam("size") Optional<Integer> size){
+        User userLogin = (User) req.getSession().getAttribute("userLogin");
+        if(userLogin==null)
+            return "redirect:/show-login-page";
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(3);
+        Page<Post> postPage = postService.findAll(currentPage, pageSize, "id", "desc");
+        model.addAttribute("postPage", postPage);
+        int totalPage = postPage.getTotalPages();
+        if(totalPage>0){
+            List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPage)
+                    .boxed().collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+        return "users/add-form";
+    }
+    @GetMapping("/my-post")
+    public  String showPostUserPaging(Model model,HttpServletRequest req,
+                                      @RequestParam("page") Optional<Integer> page,
+                                      @RequestParam("size") Optional<Integer> size){
+        User userLogin = (User) req.getSession().getAttribute("userLogin");
+        if(userLogin==null)
+            return "redirect:/show-login-page";
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(3);
+        Page<Post> postPage = postService.findByAuthor(userLogin,currentPage, pageSize, "id", "desc");
+        model.addAttribute("postPage", postPage);
+        int totalPage = postPage.getTotalPages();
+        if(totalPage>0){
+            List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPage)
+                    .boxed().collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+        return "users/add-form";
+    }
+}
