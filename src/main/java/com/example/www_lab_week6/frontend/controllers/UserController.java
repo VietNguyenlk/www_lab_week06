@@ -28,14 +28,14 @@ public class UserController {
         return "index";
     }
 
-    @GetMapping("/add-form")
-    @RequestMapping("/add-form")
-    public String show(HttpSession session , Model model){
-        User  user = (User) session.getAttribute("userLogin");
-        user =new User();
-        model.addAttribute("user",user);
-        return "users/add-form";
-    }
+//    @GetMapping("/add-form")
+//    @RequestMapping("/add-form")
+//    public String show(HttpSession session , Model model){
+//        User  user = (User) session.getAttribute("userLogin");
+//        user =new User();
+//        model.addAttribute("user",user);
+//        return "users/add-form";
+//    }
     public String add(@ModelAttribute User user, Model model){
         userRepository.save(user);
         return "/";
@@ -58,7 +58,7 @@ public class UserController {
 //            user.setLastLogin(LocalDateTime.now());
 
             session.setAttribute("userLogin", user);
-            return "redirect:/add-form";
+            return "redirect:/post";
         }
         return  "redirect:/show-login-page";
     }
